@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source scripts/argparse.bash
+argparse "$@" <<EOF || exit 1
+`cat config/argparse_settings`
+EOF

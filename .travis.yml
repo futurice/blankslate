@@ -1,0 +1,5 @@
+sudo: false
+script: echo "todo"
+branches:
+  only:
+    - master
