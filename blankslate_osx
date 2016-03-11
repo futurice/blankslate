@@ -11,7 +11,7 @@ BREWCMD="${BREWCMD:=brew install}"
 mkdir -p $FILES_DIR
 
 # homebrew
-BREW="${BREW:=python3 node go}"
+BREW="${BREW:=haproxy python3 node go}"
 brew update
 $BREWCMD $BREW || true
 
