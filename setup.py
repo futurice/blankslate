@@ -20,10 +20,12 @@ class TestCommand(Command):
                              'unittest',
                              'discover']))
 
-install_requires = []
+import blankslate
+
+install_requires = ['procboy',]
 setup(
     name = "blankslate",
-    version = "0.1.0",
+    version = blankslate.version,
     description = "Blank Slate - A foundation for complex projects",
     url = "http://github.com/futurice/blankslate",
     author = "Jussi Vaihia",

@@ -1,24 +1,25 @@
 #!/bin/bash
 set -e
-source $BSDIR/settings
+
+source $BSDIR/scripts/commands.sh
 
 SUDO="${SUDO:=}"
 PIPCMD="${PIPCMD:=pip install}"
 BREWCMD="${BREWCMD:=brew install}"
 
-mkdir -p $FILES_DIR
+call mkdir -p $BS_FILES_DIR
 
 # homebrew
 BREW="${BREW:=haproxy python3 node go}"
-brew update
-$BREWCMD $BREW || true
+call brew update
+call $BREWCMD $BREW || true
 
 # python dependencies
 PIP="${PIP:=virtualenv}"
-$SUDO $PIPCMD $PIP || true
+call $SUDO $PIPCMD $PIP || true
 
 # python virtualenvs
-mkdir -p $ENVS_DIR
+call mkdir -p $BS_ENVS_DIR
 
 # TODO: firstMatchingFile() /usr/local/bin/python2/ /usr/bin/python2/
 if [ -z $PY2]; then
@@ -42,5 +43,5 @@ slate install virtualenv -p $PY3 -name py3
 
 slate install pypy
 PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-osx64}"
-PYPY="${PYPY:=$FILES_DIR/$PYPY_VERSION/bin/pypy}"
+PYPY="${PYPY:=$BS_FILES_DIR/$PYPY_VERSION/bin/pypy}"
 slate install virtualenv -p $PYPY -name pypy

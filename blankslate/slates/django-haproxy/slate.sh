@@ -1,6 +1,7 @@
 # !/bin/bash
 set -e
 
+source $BSDIR/scripts/commands.sh
 source $BSDIR/scripts/argparse.sh
 argparse "$@" <<EOF || exit 1
 parser.add_argument('-env', help="virtualenv name")
@@ -17,14 +18,14 @@ if [[ -z $ENV ]]; then
     exit 1
 fi
 
-source $CALLER/envs/$ENV/bin/activate
+call source $CALLER/envs/$ENV/bin/activate
 
 if [[ -z $NAME ]]; then
     echo "Creating a new Django project. Name:"
     read NAME
 fi
 
-django-admin startproject $NAME --no-color
+call django-admin startproject $NAME --no-color
 
 cat <<EOT >> $CALLER/$NAME/$NAME/settings.py 
 INSTALLED_APPS += ['$NAME',]

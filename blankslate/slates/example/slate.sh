@@ -1,24 +1,21 @@
 #!/bin/bash
 set -e
+source $BSDIR/scripts/commands.sh
+
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo "example!"
 
-<<DESC
-Example Blank Slate project
-DESC
-
-bash $CWD/packages
+call bash $CWD/packages
 
 slate install django-haproxy -env py2 -name py2django
 slate install django-haproxy -env py3 -name py3django
 slate install django-haproxy -env pypy -name pypydjango
 
-cp -R $CWD/config/ config/
-cp -R $CWD/go/ go/
-cp -R $CWD/nodejs/ nodejs/
-cp $CWD/Procfile .
+call cp -R $CWD/config/ config/
+call cp -R $CWD/go/ go/
+call cp -R $CWD/nodejs/ nodejs/
+call cp $CWD/Procfile .
 
-echo "Done!"
+log "Done!"
 
 echo "Now:
 ./run -f slates/example/Procfile
