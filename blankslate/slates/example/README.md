@@ -2,10 +2,12 @@
 Example Blank Slate
 ===================
 
-Sets up a python, python3, pypy, nodejs and go -project
+Sets up a python, python3, pypy5, nodejs and golang -project
 
 ```
-./cleanslate_osx
-./slate example
+slate install bootstrap-osx
+slate install example
+slate run
 ```
+Browse to http://localhost:9000 and other haproxy-defined routes.
 
