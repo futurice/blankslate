@@ -1,5 +1,5 @@
 sudo: false
-script: echo "todo"
+script: python setup.py test
 branches:
   only:
     - master

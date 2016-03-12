@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
-echo "Blank Slate for OSX. Installing..."
-
-source settings NOOP
+source $BSDIR/settings
 
 SUDO="${SUDO:=}"
 PIPCMD="${PIPCMD:=pip install}"
@@ -39,10 +37,10 @@ if [ -z $PY3]; then
     fi
 fi
 
-bash slate virtualenv -p $PY2 -name py2
-bash slate virtualenv -p $PY3 -name py3
+slate install virtualenv -p $PY2 -name py2
+slate install virtualenv -p $PY3 -name py3
 
-bash slate pypy
+slate install pypy
 PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-osx64}"
 PYPY="${PYPY:=$FILES_DIR/$PYPY_VERSION/bin/pypy}"
-bash slate virtualenv -p $PYPY -name pypy
+slate install virtualenv -p $PYPY -name pypy
