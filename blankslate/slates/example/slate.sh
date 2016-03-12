@@ -1,17 +1,22 @@
 #!/bin/bash
 set -e
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "example!"
 
 <<DESC
 Example Blank Slate project
 DESC
 
-bash slate django-haproxy -env py2 -name py2django
-bash slate django-haproxy -env py3 -name py3django
-bash slate django-haproxy -env pypy -name pypydjango
+bash $CWD/packages
 
+slate install django-haproxy -env py2 -name py2django
+slate install django-haproxy -env py3 -name py3django
+slate install django-haproxy -env pypy -name pypydjango
+
+cp -R $CWD/config/ config/
 cp -R $CWD/go/ go/
 cp -R $CWD/nodejs/ nodejs/
+cp $CWD/Procfile .
 
 echo "Done!"
 

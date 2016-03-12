@@ -1,7 +1,7 @@
 Blank Slate
 ===========
 
-For rapid project development.
+A foundation for complex projects.
 
 What?
 -----
@@ -12,41 +12,27 @@ Need Python? Python3? Go? NodeJS? Ruby? All in the same project? No problem.
 Usage
 -----
 
-Please skim `blankslate_FLAVOR.bash` before installing Blank Slate.
-
-1. `./blankslate_FLAVOR` to install Blank Slate.
-2. `./slate` for bootstrapping and adding slates
-3. `./run` to start developing
+1. Install Blank Slate: `pip install blankslate`
+2. Install other slates: `slate install NAME`
+3. Run the project: `slate run`
 
 Example
 -------
 
-For a full example project see `./slate example` for ideas.
-
-Slates
-------
-
-Scripts for installables (aka. slates) are found in `slates/`.
-
-Install slates with using `./slate`
+For a full example project see `slate install example` for ideas.
 
 Configuration
 -------------
 
-Slate configuration:
+Basic slate configuration:
 
 * `config/haproxy.cfg` (routing)
 * `Procfile` (processes) 
 * `.env` (environment variables)
 * `packages` (optional: package dependencies (pip, npm, ...))
 
-Installation
+TODO
 ------------
 
-Homebrew-based OSX setup.
-```
-./blankslate_osx.bash
-```
-
-Linux: TODO
-Docker: TODO
+* Linux
+* Docker

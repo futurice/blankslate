@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
+source $BSDIR/scripts/argparse.sh
 
-source scripts/argparse.bash
 argparse "$@" <<EOF || exit 1
-`cat config/argparse_settings`
+`cat $BSDIR/config/argparse_settings`
 parser.add_argument('-name')
 parser.add_argument('-p', help='python binary path')
 EOF
@@ -12,4 +12,8 @@ EOF
 virtualenv (http://docs.python-guide.org/en/latest/dev/virtualenvs/)
 DESC
 
-virtualenv $ENVS_DIR/$NAME -p $P
+if [ ! -d $ENVS_DIR/$NAME ]; then
+    virtualenv $ENVS_DIR/$NAME -p $P
+else
+    echo "debug: virtualenv $NAME already exists"
+fi

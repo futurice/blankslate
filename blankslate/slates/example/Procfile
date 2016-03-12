@@ -1,6 +1,6 @@
 # PRE-actions
 # >name: cmd
->update-packages: bash slates/example/packages
+# >update-packages: bash slates/example/packages
 >py2-django-migrate: envs/py2/bin/python py2django/manage.py migrate --run-syncdb --noinput
 >py2-django-migrate: envs/py2/bin/python py2django/manage.py collectstatic --noinput
 >py3-django-migrate: envs/py3/bin/python py3django/manage.py migrate --run-syncdb --noinput
@@ -8,7 +8,7 @@
 
 # processes
 # name: cmd
-haproxy: haproxy -f slates/example/config/haproxy.cfg
+haproxy: haproxy -f config/haproxy.cfg
 py2-django: envs/py2/bin/python py2django/manage.py runserver 8001
 py3-django: envs/py3/bin/python py3django/manage.py runserver 8002
 pypy-django: envs/pypy/bin/python pypydjango/manage.py runserver 8003

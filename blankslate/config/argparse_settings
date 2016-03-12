@@ -1,3 +1,4 @@
+parser.add_argument('cmd')
 parser.add_argument('slate')
 parser.add_argument('-dir', '--dir', default="slates/", type=str,
                     help='optional argument [default %(default)s]')

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source scripts/argparse.bash
+source $BSDIR/scripts/argparse.sh
 argparse "$@" <<EOF || exit 1
 parser.add_argument('-f', '--f', default="Procfile", type=str,
                     help='optional argument [default %(default)s]')

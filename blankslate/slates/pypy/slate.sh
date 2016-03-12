@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-source settings
+source $BSDIR/settings
 
 <<DESC
 pypy (http://pypy.org/)

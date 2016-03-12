@@ -1,5 +1,0 @@
-#!/bin/bash
-set -e
-source settings
-
-bash ${DIR}${SLATE}/slate.bash "$@"
