@@ -21,7 +21,7 @@ Usage
 Slates
 ------
 
-Slates (slate.sh) are plain scripts installation recipe that install under `./slates/`.
+Slates (slate.sh) are installation scripts. Copies kept under `./slates/`.
 
 Example:
   * commands.sh:call() adds logging to calls
@@ -37,7 +37,7 @@ call echo "Hello from my awesome script"
 Example
 -------
 
-For a full example project see `slate install example` for ideas.
+For a full [example project](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example) see `slate install example` for ideas.
 
 Configuration
 -------------
