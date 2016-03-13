@@ -34,7 +34,7 @@ Browse [ready-made slates](https://github.com/futurice/blankslate/tree/master/bl
 Bootstrap the base requirements `slate install bootstrap` and then `slate install EXAMPLE_NAME`.
 
 * [example](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example)
-  * HAProxy for simultaneously working with a number of backend technologies (python3, python3, pypy5, nodejs, golang).
+  * [HAProxy](http://www.haproxy.org/) for simultaneously working with a number of backend technologies (python3, python3, pypy5, nodejs, golang).
 * [example-ansible](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example-ansible)
   * Use [Ansible](https://www.ansible.com/) for task automation
 

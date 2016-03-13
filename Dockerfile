@@ -12,13 +12,8 @@ ENV TERM xterm
 
 # Development against https://github.com/futurice/blankslate
 RUN pip install procboy
-
 COPY . /opt/blankslate/
 RUN ln -s /opt/blankslate/blankslate blankslate
-
-RUN mkdir -p slates
-RUN mkdir -p envs
-
 RUN mkdir -p bin
 RUN echo '#!/usr/bin/env bash'>>bin/slate
 RUN echo 'python -mblankslate.cli "$@"'>>bin/slate

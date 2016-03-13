@@ -56,10 +56,15 @@ def intro():
         ok("Blank Slate v%s"%blankslate.version)
         os.environ['BS_CLI_ANNOUNCE'] = '1'
 
+def slatedirs():
+    if not os.path.isdir(os.path.join(os.getenv('CALLER'), 'slates')):
+        call(['mkdir', '-p', 'slates'], target=os.getenv('CALLER'))
+
 def main():
     intro()
     args = getargs()
     setenv(**args.__dict__)
+    slatedirs()
 
     logger.debug("%s"%sys.argv)
 
