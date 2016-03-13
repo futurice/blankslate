@@ -42,10 +42,10 @@ Docker integration
 ------------------
 
 Example [Dockerfile](https://github.com/futurice/blankslate/blob/master/Dockerfile)
-´´´
+```bash
 docker build --rm --tag blankslate .
 docker run --rm -it -p 8000:9000 --name blankslate blankslate
-´´´
+```
 
 Project Templates
 -----------------
