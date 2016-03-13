@@ -12,3 +12,7 @@ call(){
     printf "$(tput setaf 2)Call: $@ [$0] $(tput sgr0)\n"
     $@
 }
+
+getcwd(){
+    echo "$( cd "$( dirname "${0}" )" && pwd )"
+}

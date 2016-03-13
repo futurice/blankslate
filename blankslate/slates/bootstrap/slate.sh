@@ -6,13 +6,33 @@ source $BSDIR/scripts/commands.sh
 SUDO="${SUDO:=}"
 PIPCMD="${PIPCMD:=pip install}"
 BREWCMD="${BREWCMD:=brew install}"
+APTGETCMD="${APTGETCMD:=apt-get install -y}"
+BS_FILES_DIR="${BS_FILES_DIR:=files}"
+BS_ENVS_DIR="${BS_ENVS_DIR:=envs}"
 
 call mkdir -p $BS_FILES_DIR
 
-# homebrew
-BREW="${BREW:=haproxy python3 node go}"
-call brew update
-call $BREWCMD $BREW || true
+UNAME=$(uname)
+# OSX
+if [ "$UNAME" == "Darwin" ]; then
+    log "OSX -flavor"
+    BREW="${BREW:=haproxy python3 node go}"
+    call brew update
+    $BREWCMD $BREW || true
+
+    PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-osx64}"
+fi
+# Linux
+if [ "$UNAME" == "Linux" ]; then
+    echo "Linux -flavor"
+    curl -sL https://deb.nodesource.com/setup_5.x | $SUDO bash -
+
+    APTGET="${APTGET:=haproxy python3 nodejs golang}"
+    call apt-get update
+    call $APTGETCMD $APTGET
+
+    PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-linux64}"
+fi
 
 # python dependencies
 PIP="${PIP:=virtualenv}"
@@ -41,7 +61,6 @@ fi
 slate install virtualenv -p $PY2 -name py2
 slate install virtualenv -p $PY3 -name py3
 
-slate install pypy
-PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-osx64}"
+slate install pypy -filename $PYPY_VERSION
 PYPY="${PYPY:=$BS_FILES_DIR/$PYPY_VERSION/bin/pypy}"
 slate install virtualenv -p $PYPY -name pypy

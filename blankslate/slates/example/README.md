@@ -5,7 +5,7 @@ Example Blank Slate
 Sets up a python, python3, pypy5, nodejs and golang -project
 
 ```
-slate install bootstrap-osx
+slate install bootstrap
 slate install example
 slate run
 ```

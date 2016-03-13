@@ -25,5 +25,5 @@ def github(repository):
 
 def local(repository):
     call(['cp', '-R',
-            os.path.join(os.getenv('BSDIR'), 'slates', repository),
-            callerpath('slates')])
+            os.path.join(os.getenv('BSDIR'), 'slates', repository) + os.sep,
+            callerpath('slates', repository) + os.sep])

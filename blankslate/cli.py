@@ -80,7 +80,7 @@ def run(args, cmd=['bash', 'run.sh']):
 
 def install(args):
     slatename = resolve_installer(args, sys.argv[2])
-    for k in [os.getenv('BSDIR'), os.getenv('CALLER')]:
+    for k in [os.getenv('CALLER')]:
         path = os.path.join(k,
                             os.getenv('BS_SLATES_DIR'),
                             slatename,

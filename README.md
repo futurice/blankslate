@@ -1,12 +1,7 @@
 Blank Slate
 ===========
 
-A foundation for complex projects.
-
-What?
------
-
-Create shareable project templates to keep your developer flow automated.
+A programmable foundation for complex projects.
 
 Usage
 -----
@@ -20,11 +15,9 @@ Usage
 Slates
 ------
 
-Slates (slate.sh) are installation scripts. Copies kept under `./slates/`.
-
-Example:
-  * commands.sh:call() adds logging to calls
-  * Blank Slate environment variables $BS* available
+Slates (slate.sh) are simple scripts, installed to `./slates/`.
+* commands.sh:call() adds logging to calls
+* Blank Slate environment variables $BS* available
 
 ```bash
 #!/bin/bash
@@ -33,17 +26,31 @@ source $BSDIR/scripts/commands.sh
 call echo "Hello from my awesome script"
 ```
 
-Example
--------
+Examples
+--------
 
-For a full [example project](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example) see `slate install example` for ideas.
+Browse [ready-made slates](https://github.com/futurice/blankslate/tree/master/blankslate/slates/).
 
-Sets up HAProxy as a front for working with a number of backend technologies (python2, python3, pypy5, nodejs, golang).
+Bootstrap the base requirements `slate install bootstrap` and then `slate install EXAMPLE_NAME`.
 
-Configuration
--------------
+* [example](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example)
+  * HAProxy for simultaneously working with a number of backend technologies (python3, python3, pypy5, nodejs, golang).
+* [example-ansible](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example-ansible)
+  * Use [Ansible](https://www.ansible.com/) for task automation
 
-Basic slate configuration:
+Docker integration
+------------------
+
+Example [Dockerfile](https://github.com/futurice/blankslate/blob/master/Dockerfile)
+´´´
+docker build --rm --tag blankslate .
+docker run --rm -it -p 8000:9000 --name blankslate blankslate
+´´´
+
+Project Templates
+-----------------
+
+The `example` template:
 
 * `config/haproxy.cfg` (routing)
 * `Procfile` (processes) 
@@ -51,8 +58,3 @@ Basic slate configuration:
 * `packages` (optional: package dependencies (pip, npm, ...))
 * `run.sh` (optional: use something else than [Process Boy](https://github.com/futurice/procboy))
 
-TODO
-------------
-
-* Linux
-* Docker
