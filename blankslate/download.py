@@ -12,7 +12,7 @@ def mkdir(path):
 
 def git_clone(repository, target):
     cmd = shlex.split("git clone %s"%repository)
-    call(cmd, cwd=target)
+    call(cmd, target=target)
 
 def github(repository):
     author = repository.split('/')[0]

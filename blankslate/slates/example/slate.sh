@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 source $BSDIR/scripts/commands.sh
-
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 call bash $CWD/packages
@@ -17,8 +16,8 @@ call cp $CWD/Procfile .
 
 log "Done!"
 
-echo "Now:
-./run -f slates/example/Procfile
+echo "Fire up project (processes in ./Procfile):
+$ slate run
 "
 
 echo "Then browse:
