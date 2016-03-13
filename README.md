@@ -6,8 +6,7 @@ A foundation for complex projects.
 What?
 -----
 
-Sets up HAProxy as a front for working with any number of backend technologies.
-Need Python? Python3? Go? NodeJS? Ruby? All in the same project? No problem.
+Create shareable project templates to keep your developer flow automated.
 
 Usage
 -----
@@ -38,6 +37,8 @@ Example
 -------
 
 For a full [example project](https://github.com/futurice/blankslate/tree/master/blankslate/slates/example) see `slate install example` for ideas.
+
+Sets up HAProxy as a front for working with a number of backend technologies (python2, python3, pypy5, nodejs, golang).
 
 Configuration
 -------------
