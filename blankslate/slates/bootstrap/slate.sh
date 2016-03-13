@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-
 source $BSDIR/scripts/commands.sh
 
 SUDO="${SUDO:=}"
@@ -13,7 +12,6 @@ BS_ENVS_DIR="${BS_ENVS_DIR:=envs}"
 call mkdir -p $BS_FILES_DIR
 
 UNAME=$(uname)
-# OSX
 if [ "$UNAME" == "Darwin" ]; then
     log "OSX -flavor"
     BREW="${BREW:=haproxy python3 node go}"
@@ -21,9 +19,7 @@ if [ "$UNAME" == "Darwin" ]; then
     $BREWCMD $BREW || true
 
     PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-osx64}"
-fi
-# Linux
-if [ "$UNAME" == "Linux" ]; then
+elif [ "$UNAME" == "Linux" ]; then
     echo "Linux -flavor"
     curl -sL https://deb.nodesource.com/setup_5.x | $SUDO bash -
 
@@ -32,6 +28,9 @@ if [ "$UNAME" == "Linux" ]; then
     call $APTGETCMD $APTGET
 
     PYPY_VERSION="${PYPY_VERSION:=pypy-5.0.0-linux64}"
+else:
+    echo "Unsupported OS"
+    exit 1
 fi
 
 # python dependencies

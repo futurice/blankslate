@@ -9,10 +9,6 @@ parser.add_argument('-name', '--name', default="", type=str,
                     help='optional argument [default %(default)s]')
 EOF
 
-<<DESC
-Django project initiation with 'startproject', assuming HAproxy in front
-DESC
-
 if [[ -z $ENV ]]; then
     echo "$0: error: -env option required"
     exit 1
