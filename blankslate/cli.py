@@ -27,7 +27,8 @@ def getargs():
     parser.add_argument('-envs', '--envs-dir', default="envs", type=str,
                         help='optional argument [default %(default)s]')
 
-    subparsers = parser.add_subparsers(help='sub-command help', dest='action')
+    subparsers = parser.add_subparsers(dest='action')
+    subparsers.required = True
     parser_run = subparsers.add_parser('run')
     parser_run.add_argument('-f', '--f', default="Procfile", type=str,
                         help='optional argument [default %(default)s]')
