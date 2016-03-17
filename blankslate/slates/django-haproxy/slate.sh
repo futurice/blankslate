@@ -1,26 +1,11 @@
 # !/bin/bash
-set -e
+set -eou pipefail
 
 source $BSDIR/scripts/commands.sh
-source $BSDIR/scripts/argparse.sh
-argparse "$@" <<EOF || exit 1
-parser.add_argument('-env', help="virtualenv name")
-parser.add_argument('-name', '--name', default="", type=str,
-                    help='optional argument [default %(default)s]')
-EOF
 
-if [[ -z $ENV ]]; then
-    echo "$0: error: -env option required"
-    exit 1
-fi
-
+set +u
 call source $CALLER/envs/$ENV/bin/activate
-
-if [[ -z $NAME ]]; then
-    echo "Creating a new Django project. Name:"
-    read NAME
-fi
-
+set -u
 call django-admin startproject $NAME --no-color
 
 cat <<EOT >> $CALLER/$NAME/$NAME/settings.py 

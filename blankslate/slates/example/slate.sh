@@ -1,13 +1,13 @@
 #!/bin/bash
-set -e
+set -eou pipefail
 source $BSDIR/scripts/commands.sh
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 call bash $CWD/packages
 
-slate install django-haproxy -env py2 -name py2django
-slate install django-haproxy -env py3 -name py3django
-slate install django-haproxy -env pypy -name pypydjango
+slate install django-haproxy --ENV py2 --NAME py2django
+slate install django-haproxy --ENV py3 --NAME py3django
+slate install django-haproxy --ENV pypy --NAME pypydjango
 
 call cp -R $CWD/config/ config/
 call cp -R $CWD/go/ go/
