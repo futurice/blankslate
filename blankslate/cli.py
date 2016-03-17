@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-import os, sys, argparse, subprocess, shlex, logging
+import os, sys, argparse, subprocess, shlex, logging, json
 import six
 
 import blankslate
 from blankslate.download import github, local
 from blankslate.commands import call, fail, ok
 from blankslate.logging import logger
+
+import click
 
 thismodule = sys.modules[__name__]
 
@@ -49,7 +51,7 @@ def getargs():
     if has_help:
         sys.argv.append('-h')
 
-    return args
+    return args, unknown
 
 def intro():
     if not os.getenv('BS_CLI_ANNOUNCE'):
@@ -57,13 +59,27 @@ def intro():
         os.environ['BS_CLI_ANNOUNCE'] = '1'
 
 def slatedirs():
-    if not os.path.isdir(os.path.join(os.getenv('CALLER'), 'slates')):
-        call(['mkdir', '-p', 'slates'], target=os.getenv('CALLER'))
+    for path in ['slates', 'files', 'envs']:
+        if not os.path.isdir(os.path.join(os.getenv('CALLER'), path)):
+            call(['mkdir', '-p', path], target=os.getenv('CALLER'))
+
+def unknown_args(unknown):
+    a = {}
+    while len(unknown):
+        try:
+            name = unknown.pop(0)
+            value = unknown.pop(0)
+        except IndexError as e:
+            value = ''
+        name = name.replace('--','')
+        a.setdefault(name, value)
+    return a
 
 def main():
     intro()
-    args = getargs()
+    args, unknown = getargs()
     setenv(**args.__dict__)
+    args.unknown = unknown_args(unknown)
     slatedirs()
 
     logger.debug("%s"%sys.argv)
@@ -78,7 +94,6 @@ def run(args, cmd=['bash', 'run.sh']):
     for k in [os.getenv('CALLER'), os.getenv('BSDIR')]:
         if os.path.isfile(os.path.join(k, 'run.sh')):
             cmd = [cmd[0]] + os.path.expandvars(shlex.split(k + '/' + cmd[1]))
-            cmd += sys.argv[2:] # pass arguments
             logger.debug("%s"%cmd)
             call(cmd, env=os.environ.copy())
             break
@@ -86,17 +101,53 @@ def run(args, cmd=['bash', 'run.sh']):
 def install(args):
     slatename = resolve_installer(args, sys.argv[2])
     for k in [os.getenv('CALLER')]:
+        click.echo("Installing: %s"%slatename)
         path = os.path.join(k,
                             os.getenv('BS_SLATES_DIR'),
-                            slatename,
-                            'slate.sh')
-        installcmd = ['bash'] + shlex.split(os.path.expandvars(path))
-        installcmd += sys.argv[2:] # pass arguments
-        if os.path.isfile(path):
-            res = call(installcmd, env=os.environ.copy())
+                            slatename,)
+        runnable = os.path.join(path, 'slate.sh')
+        config = os.path.join(path, 'slate.json')
+        installcmd = ['bash'] + shlex.split(os.path.expandvars(runnable))
+        if os.path.isfile(runnable):
+            # config
+            slate_args = gather_slate_args(config, args.unknown)
+            env = os.environ.copy()
+            for key,value in six.iteritems(dict(slate_args.items() + args.unknown.items())):
+                env[key.upper()] = six.text_type(value)
+            # run
+            res = call(installcmd, env=env)
             if res != 0:
                 fail(' '.join(installcmd))
                 sys.exit(0)
+
+def gather_slate_args(path, given):
+    c = parse_slate_json(path)
+    r = {}
+    if c.get('args'):
+        click.echo("Please provide the following configuration:")
+    for name, data in six.iteritems(c.get('args')):
+        if name.upper() in given and 'PROMPT' not in given:
+            continue
+        click.echo("%s"%name.capitalize())
+        if data.get('help'):
+            click.echo(" > help: %s"%data['help'])
+        value = click.prompt('', default=data['default'])
+        r.setdefault(name, value)
+    return r
+
+def parse_slate_json(path):
+    c = dict(args={}, requires=[])
+    try:
+        c.update(json.load(open(path)))
+        r = {}
+        for name, data in six.iteritems(c.get('args', {})):
+            if isinstance(data, six.string_types):
+                data = dict(default=data)
+            r.setdefault(name, data)
+        c['args']= r
+    except IOError as e:
+        pass
+    return c
 
 def resolve_installer(args, cmd):
     if ':' in cmd:

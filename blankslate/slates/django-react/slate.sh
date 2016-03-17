@@ -1,10 +1,6 @@
 #!/bin/bash
-set -e
+set -eou pipefail
 source $BSDIR/scripts/commands.sh
-source $BSDIR/scripts/argparse.sh
-argparse "$@" <<EOF || exit 1
-parser.add_argument('-name', '--name', required=True, help='Django project name')
-EOF
 
 call pip install Django django-webpack-loader
 call django-admin startproject $NAME --no-color

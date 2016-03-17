@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eou pipefail
 source $BSDIR/scripts/commands.sh
 
 SUDO="${SUDO:=}"
@@ -8,8 +8,6 @@ BREWCMD="${BREWCMD:=brew install}"
 APTGETCMD="${APTGETCMD:=apt-get install -y}"
 BS_FILES_DIR="${BS_FILES_DIR:=files}"
 BS_ENVS_DIR="${BS_ENVS_DIR:=envs}"
-
-call mkdir -p $BS_FILES_DIR
 
 UNAME=$(uname)
 if [ "$UNAME" == "Darwin" ]; then
@@ -37,10 +35,8 @@ fi
 PIP="${PIP:=virtualenv}"
 call $SUDO $PIPCMD $PIP || true
 
-# python virtualenvs
-call mkdir -p $BS_ENVS_DIR
-
 # TODO: firstMatchingFile() /usr/local/bin/python2/ /usr/bin/python2/
+PY2="${PY2:=}"
 if [ -z $PY2]; then
     if [ -f /usr/local/bin/python2/ ]; then
         PY2="${PY2:=/usr/local/bin/python2}"
@@ -49,6 +45,7 @@ if [ -z $PY2]; then
     fi
 fi
 
+PY3="${PY3:=}"
 if [ -z $PY3]; then
     if [ -f /usr/local/bin/python2/ ]; then
         PY3="${PY3:=/usr/local/bin/python3}"
@@ -57,9 +54,9 @@ if [ -z $PY3]; then
     fi
 fi
 
-slate install virtualenv -p $PY2 -name py2
-slate install virtualenv -p $PY3 -name py3
+slate install virtualenv --PYTHON $PY2 --NAME py2
+slate install virtualenv --PYTHON $PY3 --NAME py3
 
-slate install pypy -filename $PYPY_VERSION
+slate install pypy --FILENAME $PYPY_VERSION
 PYPY="${PYPY:=$BS_FILES_DIR/$PYPY_VERSION/bin/pypy}"
-slate install virtualenv -p $PYPY -name pypy
+slate install virtualenv --PYTHON $PYPY --NAME pypy

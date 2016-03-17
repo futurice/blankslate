@@ -22,7 +22,7 @@ class TestCommand(Command):
 
 import blankslate
 
-install_requires = ['procboy',]
+install_requires = ['procboy','click',]
 setup(
     name = "blankslate",
     version = blankslate.version,
